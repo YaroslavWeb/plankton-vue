@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router'
 import TheDivider from './components/Utilities/TheDivider.vue'
 import TheModal from './components/TheModal/TheModal.vue'
+import TheFooter from './components/TheFooter/TheFooter.vue'
 </script>
 
 <template>
@@ -46,6 +47,8 @@ import TheModal from './components/TheModal/TheModal.vue'
 
     <TheDivider :height="48" />
     <RouterView />
+    <TheDivider />
+    <TheFooter />
   </div>
   <TheModal />
 </template>
@@ -75,7 +78,7 @@ header {
 
 .container {
   min-height: calc(100vh - var(--header-height));
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 16px;
 }

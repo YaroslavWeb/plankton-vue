@@ -1,23 +1,39 @@
 import { defineStore } from 'pinia'
 
+import { E_ModalWindow } from '@/types/ui'
+import type { I_User } from '@/types/user'
+import type { I_Location } from '@/types/location'
+
 interface I_UsersStore {
-  modal: boolean
+  modal: {
+    isOpen: boolean
+    window: E_ModalWindow
+    data: I_User | I_Location | null
+  }
 }
 
 export const useUIStore = defineStore({
   id: 'ui',
   state: (): I_UsersStore => ({
-    modal: false,
+    modal: {
+      isOpen: false,
+      window: E_ModalWindow.addLocation,
+      data: null,
+    },
   }),
   getters: {
-    getModal: (state) => state.modal,
+    getModalIsOpen: (state) => state.modal.isOpen,
+    getModalWindow: (state) => state.modal.window,
+    getModalData: (state) => state.modal.data,
   },
   actions: {
-    openModal() {
-      this.modal = true
+    openModal(window: E_ModalWindow, data: I_User | I_Location | null = null) {
+      this.modal.isOpen = true
+      this.modal.window = window
+      this.modal.data = data
     },
     closeModal() {
-      this.modal = false
+      this.modal.isOpen = false
     },
   },
 })

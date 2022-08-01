@@ -1,13 +1,16 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { useLocationsStore } from '@/stores/locations'
 import { useUIStore } from '@/stores/ui'
 import { useUsersStore } from '@/stores/users'
 import TheButton from '@/components/TheButton/TheButton.vue'
 import { E_ButtonSize, E_ButtonVariant } from '@/components/TheButton/interfaces'
+import { E_ModalWindow } from '@/types/ui'
+import type { T_UserId } from '@/types/user.js'
 
 const usersStore = useUsersStore()
-const users = usersStore.getUsers
-const totalUsers = usersStore.getTotalUsers
+const users = computed(() => usersStore.getUsers)
+const totalUsers = computed(() => usersStore.getTotalUsers)
 
 const locationsStore = useLocationsStore()
 
@@ -18,8 +21,17 @@ const getLocationLabels = (userLocationId: string) => {
 }
 
 const uiStore = useUIStore()
-const handleOpenModal = () => {
-  uiStore.openModal()
+
+const handleOpenAddUserModal = () => {
+  uiStore.openModal(E_ModalWindow.addUser)
+}
+const handleOpenUpdateUserModal = (userId: T_UserId) => {
+  const user = usersStore.getUserById(userId)
+  uiStore.openModal(E_ModalWindow.updateUser, user)
+}
+const handleOpenRemoveUserModal = (userId: T_UserId) => {
+  const user = usersStore.getUserById(userId)
+  uiStore.openModal(E_ModalWindow.removeUser, user)
 }
 </script>
 <template>
@@ -31,7 +43,7 @@ const handleOpenModal = () => {
       <th>Location</th>
       <th>
         <TheButton
-          @click="handleOpenModal"
+          @click="handleOpenAddUserModal"
           :size="E_ButtonSize.sm"
           :variant="E_ButtonVariant.outline"
           >ADD NEW+</TheButton
@@ -45,11 +57,11 @@ const handleOpenModal = () => {
         <td>{{ user.age }}</td>
         <td>{{ getLocationLabels(user.locationId) }}</td>
         <td>
-          <TheButton @click="handleOpenModal" :variant="E_ButtonVariant.ghost"
+          <TheButton @click="handleOpenUpdateUserModal(user.id)" :variant="E_ButtonVariant.ghost"
             ><FA icon="fa-solid fa-edit"
           /></TheButton>
           |
-          <TheButton @click="handleOpenModal" :variant="E_ButtonVariant.ghost"
+          <TheButton @click="handleOpenRemoveUserModal(user.id)" :variant="E_ButtonVariant.ghost"
             ><FA icon="fa-solid fa-trash"
           /></TheButton>
         </td>

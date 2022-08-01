@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { v4 as uid } from 'uuid'
 
 import { locationsData } from './data'
 
@@ -21,5 +22,21 @@ export const useLocationsStore = defineStore({
     },
     getTotalLocations: (state) => state.locations.length,
   },
-  actions: {},
+  actions: {
+    addLocation({ country, city }: Omit<I_Location, 'id'>) {
+      const newLocation: I_Location = {
+        id: uid(),
+        country,
+        city,
+      }
+      this.locations.unshift(newLocation)
+    },
+    updateLocation(location: I_Location) {
+      this.locations = this.locations.map((item) => (location.id === item.id ? location : item))
+    },
+
+    removeLocation(locationId: string) {
+      this.locations = this.locations.filter((item) => item.id !== locationId)
+    },
+  },
 })

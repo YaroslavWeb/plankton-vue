@@ -1,9 +1,10 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { useUsersStore } from '@/stores/users'
-import UserCard from '../../UserCard/UserCard.vue'
+import UserCard from '@/components/UserCard/UserCard.vue'
 
 const usersStore = useUsersStore()
-const users = usersStore.getUsers
+const users = computed(() => usersStore.getUsers)
 </script>
 <template>
   <div class="user-list">

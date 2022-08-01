@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { withDefaults } from 'vue'
+import { withDefaults, computed } from 'vue'
 import { E_ButtonVariant, E_ButtonSize, E_ButtonColor } from './interfaces'
 
 interface I_ButtonProps {
@@ -12,9 +12,11 @@ const props = withDefaults(defineProps<I_ButtonProps>(), {
   size: E_ButtonSize.md,
   color: E_ButtonColor.primary,
 })
+
+const classes = computed(() => props.size + ' ' + props.variant)
 </script>
 <template>
-  <button type="button" :class="props.size + ' ' + props.variant"><slot></slot></button>
+  <button type="button" :class="classes"><slot /></button>
 </template>
 <style lang="scss" scoped>
 button {

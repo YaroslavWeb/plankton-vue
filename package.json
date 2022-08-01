@@ -17,12 +17,14 @@
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "pinia": "^2.0.16",
     "sass": "^1.54.0",
+    "uuid": "^8.3.2",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.45",
+    "@types/uuid": "^8.3.4",
     "@vitejs/plugin-vue": "^3.0.1",
     "@vitejs/plugin-vue-jsx": "^2.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
